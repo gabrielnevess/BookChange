@@ -7,6 +7,7 @@ import Styles from "./Styles";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import UserActions from "../../../store/Ducks/User";
+import SplashScreen from "react-native-splash-screen";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {Constants} from "../../../util";
 
@@ -33,6 +34,9 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
+
+        SplashScreen.hide();
+
         this.willBlurSubscription = this.props.navigation.addListener("willBlur", () => {
             BackHandler.removeEventListener("hardwareBackPress", this.onBackPressionado)
         });

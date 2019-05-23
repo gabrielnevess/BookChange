@@ -14,3 +14,4 @@ npm install formik --save
 npm install yup --save
 npm install query-string --save
 npm install react-navigation-material-bottom-tabs --save
+npm install react-native-splash-screen --save
