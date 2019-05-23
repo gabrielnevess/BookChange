@@ -7,6 +7,10 @@ export default StyleSheet.create({
         width: 200,
         height: 135
     },
+    textRegister: {
+        textAlign: "center",
+        color: Colors.black
+    },
     textSignIn: {
         textAlign: "center",
         color: Colors.white

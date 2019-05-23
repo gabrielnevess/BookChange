@@ -13,7 +13,7 @@ import tabBarIcon from "../components/MyComponents/TabBarIcon";
 
 /* paginas */
 import LoadingPage from "../components/Pages/LoadingPage/LoadingPage";
-import LoginPage from "../components/Pages/LoginPage/LoginPage";
+import LoginPage from "../components/Pages/LoginPage";
 import HomePage from "../components/Pages/HomePage";
 import AccountPage from "../components/Pages/AccountPage";
 

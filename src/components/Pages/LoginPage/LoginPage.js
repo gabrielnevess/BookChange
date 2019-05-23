@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import UserActions from "../../../store/Ducks/User";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import {Constants} from "../../../util";
 
 class LoginPage extends Component {
 
@@ -110,7 +111,17 @@ class LoginPage extends Component {
                         />
 
                         <View style={{marginTop: 5}}>
+
                             {this.renderBtnAcessar()}
+
+                            <View style={{marginTop: 5}}>
+                                <Button
+                                    mode="text"
+                                    onPress={() => this.props.navigation.navigate(Constants.REGISTER_PAGE)}>
+                                    <Text style={Styles.textRegister}>REGISTRAR-SE</Text>
+                                </Button>
+                            </View>
+
                         </View>
 
                     </View>
