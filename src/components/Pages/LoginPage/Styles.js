@@ -5,7 +5,7 @@ export default StyleSheet.create({
     logo: {
         alignSelf: "center",
         width: 200,
-        height: 130
+        height: 135
     },
     textSignIn: {
         textAlign: "center",
@@ -16,17 +16,10 @@ export default StyleSheet.create({
         justifyContent: "center",
         backgroundColor: Colors.blue,
     },
-    inputStyle: {
-        backgroundColor: Colors.whiteSmoke
-    },
     container: {
         flex: 3,
         marginTop: 50,
         marginHorizontal: 5
-    },
-    buttonConf: {
-        width: 50,
-        height: 50
     },
     viewImage: {
         flex: 1,

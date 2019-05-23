@@ -87,7 +87,7 @@ class LoginPage extends Component {
                         <Image
                             resizeMode="stretch"
                             style={Styles.logo}
-                            source={require("../../../assets/images/bookchange.png")}/>
+                            source={require("../../../assets/images/book-change-black.png")}/>
                     </View>
 
                     <View style={Styles.container}>

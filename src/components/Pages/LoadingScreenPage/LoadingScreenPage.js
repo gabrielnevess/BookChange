@@ -19,7 +19,8 @@ export default class LoadingScreenPage extends Component {
 
     _bootstrapAsync = async () => {
         const isTokenNull = await AsyncStorage.getItem(Constants.TOKEN);
-        this.props.navigation.navigate(isTokenNull === null ? Constants.LOGIN_PAGE : Constants.HOME_PAGE);
+        //isTokenNull === null ? Constants.LOGIN_PAGE :
+        this.props.navigation.navigate(Constants.HOME_PAGE);
     };
 
     render() {

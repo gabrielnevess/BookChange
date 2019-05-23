@@ -11,4 +11,6 @@ export default {
     babyBlue: "#ACCAFF",
     yellow: "#ffce00",
     pink: "#FF00AB",
+    lightPink: "#ff757c",
+    gray: "#aaa"
 }
