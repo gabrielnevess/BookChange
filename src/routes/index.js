@@ -12,7 +12,7 @@ import store from "../store";
 import tabBarIcon from "../components/MyComponents/TabBarIcon";
 
 /* paginas */
-import LoadingScreenPage from "../components/Pages/LoadingScreenPage/LoadingScreenPage";
+import LoadingPage from "../components/Pages/LoadingPage/LoadingPage";
 import LoginPage from "../components/Pages/LoginPage/LoginPage";
 import HomePage from "../components/Pages/HomePage";
 import AccountPage from "../components/Pages/AccountPage";
@@ -50,12 +50,12 @@ HomePage.navigationOptions = ({navigation}) => {
 
 const StackNavigator = createStackNavigator(
     {
-        LoadingScreenPage: {screen: LoadingScreenPage},
+        LoadingPage: {screen: LoadingPage},
         LoginPage: {screen: LoginPage},
         HomePage: {screen: TabNavigator},
     },
     {
-        initialRouteName: Constants.LOADING_SCREEN_PAGE,
+        initialRouteName: Constants.LOADING_PAGE,
         headerMode: "none",
         defaultNavigationOptions: {
             gesturesEnabled: false

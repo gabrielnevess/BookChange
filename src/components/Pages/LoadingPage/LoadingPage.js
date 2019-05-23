@@ -3,7 +3,7 @@ import {SafeAreaView, ActivityIndicator} from 'react-native';
 import {Constants} from "../../../util";
 import AsyncStorage from "@react-native-community/async-storage";
 
-export default class LoadingScreenPage extends Component {
+export default class LoadingPage extends Component {
 
     static navigationOptions = {
         header: null
