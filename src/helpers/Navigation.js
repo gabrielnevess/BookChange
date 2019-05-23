@@ -1,4 +1,4 @@
-import {NavigationActions} from "react-navigation";
+import {StackActions, NavigationActions} from "react-navigation";
 
 let _navigator;
 
@@ -15,7 +15,22 @@ const navigate = (routeName, params) => {
     );
 };
 
+const resetPagesWithNavigation = (routeName, params) => {
+    _navigator.dispatch(
+        StackActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({
+                    routeName,
+                    params,
+                })
+            ]
+        })
+    );
+};
+
 export default {
     navigate,
     setTopLevelNavigator,
+    resetPagesWithNavigation
 };

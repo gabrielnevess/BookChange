@@ -51,7 +51,7 @@ HomePage.navigationOptions = ({navigation}) => {
 const StackNavigator = createStackNavigator(
     {
         LoadingScreenPage: {screen: LoadingScreenPage},
-        //LoginPage: {screen: LoginPage},
+        LoginPage: {screen: LoginPage},
         HomePage: {screen: TabNavigator},
     },
     {
