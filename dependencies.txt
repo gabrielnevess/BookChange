@@ -1,17 +1,18 @@
 npm install react-native-paper --save
-npm install react-native-vector-icons --save && react-native link react-native-vector-icons
+npm install react-native-vector-icons --save
 npm install redux --save
 npm install react-redux --save
 npm install redux-saga --save
 npm install seamless-immutable --save
 npm install reduxsauce --save
 npm install react-navigation --save
-npm install react-native-gesture-handler --save && react-native link react-native-gesture-handler
-npm install @react-native-community/async-storage --save && react-native link @react-native-community/async-storage
+npm install react-native-gesture-handler --save
+npm install @react-native-community/async-storage --save
 npm install react-native-keyboard-aware-scroll-view --save
 npm install axios --save
 npm install formik --save
 npm install yup --save
 npm install query-string --save
 npm install react-navigation-material-bottom-tabs --save
-npm install react-native-splash-screen --save
+npm install react-native-splash-screen --save && react-native link react-native-splash-screen
+npm install react-native-easy-grid --save

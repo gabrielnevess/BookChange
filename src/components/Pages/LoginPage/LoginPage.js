@@ -20,7 +20,7 @@ class LoginPage extends Component {
         super(props);
 
         this.state = {
-            registry: "",
+            email: "",
             password: ""
         };
 
@@ -34,9 +34,7 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
-
         SplashScreen.hide();
-
         this.willBlurSubscription = this.props.navigation.addListener("willBlur", () => {
             BackHandler.removeEventListener("hardwareBackPress", this.onBackPressionado)
         });
@@ -54,7 +52,7 @@ class LoginPage extends Component {
         if (loading) {
             return (
                 <View style={{marginTop: 10}}>
-                    <ActivityIndicator size="large" color={Colors.blue}/>
+                    <ActivityIndicator size="large" />
                 </View>
             );
         }
@@ -70,7 +68,8 @@ class LoginPage extends Component {
 
     //método para autenticar-se
     userAuth = () => {
-
+        const {email, password} = this.state;
+        this.props.userRequestLogin(email, password);
     };
 
     onBackPressionado = () => {
@@ -101,8 +100,8 @@ class LoginPage extends Component {
                             label="E-mail"
                             mode="outlined"
                             disabled={loading}
-                            value={this.state.registry}
-                            onChangeText={(registry) => this.setState({registry})}
+                            value={this.state.email}
+                            onChangeText={(email) => this.setState({email})}
                         />
 
                         <TextInput

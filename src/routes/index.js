@@ -51,11 +51,11 @@ HomePage.navigationOptions = ({navigation}) => {
 const StackNavigator = createStackNavigator(
     {
         LoadingPage: {screen: LoadingPage},
-        LoginPage: {screen: LoginPage},
         HomePage: {screen: TabNavigator},
+        LoginPage: {screen: LoginPage},
     },
     {
-        initialRouteName: Constants.LOADING_PAGE,
+        initialRouteName: Constants.HOME_PAGE,
         headerMode: "none",
         defaultNavigationOptions: {
             gesturesEnabled: false

@@ -1,9 +1,14 @@
 import React, {Component} from "react";
-import {BackHandler, SafeAreaView} from "react-native";
-import {Appbar} from "react-native-paper";
+import {BackHandler, SafeAreaView, Alert} from "react-native";
+import {Appbar, Button, Text} from "react-native-paper";
 import {Colors} from "../../../styles";
+import {bindActionCreators} from "redux";
+import UserActions from "../../../store/Ducks/User";
+import {connect} from "react-redux";
+import {Navigation} from "../../../helpers";
+import {Constants} from "../../../util";
 
-export default class AccountPage extends Component {
+class AccountPage extends Component {
 
     didFocusSubscription;
     willBlurSubscription;
@@ -50,8 +55,36 @@ export default class AccountPage extends Component {
 
     render() {
         return (
-            <SafeAreaView style={{flex: 1, alignItems: "center"}}></SafeAreaView>
+            <SafeAreaView style={{flex: 1, alignItems: "center"}}>
+                <Button
+                    mode="contained"
+                    onPress={() => {
+
+                        Alert.alert(
+                            'Já vai?',
+                            'Deseja realmente sair?',
+                            [
+                                {text: 'Não', onPress: () => console.log('Cancel Pressed'),},
+                                {text: 'Sim', onPress: () => Navigation.resetPagesWithNavigation(Constants.LOGIN_PAGE)},
+                            ],
+                            {cancelable: false},
+                        );
+                    }}>
+                    <Text>Sair</Text>
+                </Button>
+            </SafeAreaView>
         );
     }
 
 }
+
+const mapStateToProps = ({user}) => ({
+    loading: user.loading
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(UserActions, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AccountPage);

@@ -1,0 +1,25 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+
+target 'BookChange' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  # use_frameworks!
+
+  node_modules_path = '../node_modules'
+
+  pod 'yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/yoga.podspec"
+  pod 'React', path: "#{node_modules_path}/react-native"
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end
