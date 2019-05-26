@@ -111,7 +111,7 @@ export default class HomePage extends Component {
                     </Col>
                     <Col>
                         <Col style={{ alignItems: "flex-end" }}>
-                            <Avatar.Icon size={24} icon={item.en_tipo_anuncio === "troca" ? "swap-horiz" : "attach_money"}/>
+                            <Avatar.Icon size={24} icon={item.en_tipo_anuncio === "troca" ? "swap-horiz" : "attach-money"}/>
                         </Col>
                         <Col>
                             <Text style={{fontSize: 16, fontWeight: "bold"}}>{item.va_titulo_livro}</Text>
@@ -143,11 +143,11 @@ export default class HomePage extends Component {
                     data={this.state.dataList}
                     renderItem={this.renderAnuncios}
                     keyExtractor={item => String(item.in_anuncio_id)} // É obrigatório utilizar item, é padrão do flatlist
-                    onEndReached={this.loadDataList}
-                    onEndReachedThreshold={0.1} // Chegando em 10% do fim da flatlist chama o onEndReached
+                    //onEndReached={this.loadDataList}
+                    //onEndReachedThreshold={0.1} // Chegando em 10% do fim da flatlist chama o onEndReached
                     numColumns={1}
                     disableVirtualization={true}
-                    ListFooterComponent={this.renderFooter}
+                    //ListFooterComponent={this.renderFooter}
                 />
             </SafeAreaView>
         );

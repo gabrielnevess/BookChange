@@ -33,7 +33,10 @@ const TabNavigator = createMaterialBottomTabNavigator({
         },
     },
 }, {
-    activeColor: Colors.white
+    activeColor: Colors.white,
+    barStyle: {
+        position: "absolute"
+    }
 });
 
 //desativa tabBar para as seguintes páginas
