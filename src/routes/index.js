@@ -12,8 +12,6 @@ import store from "../store";
 import tabBarIcon from "../components/MyComponents/TabBarIcon";
 
 /* paginas */
-import LoadingPage from "../components/Pages/LoadingPage/LoadingPage";
-import LoginPage from "../components/Pages/LoginPage";
 import HomePage from "../components/Pages/HomePage";
 import AccountPage from "../components/Pages/AccountPage";
 
@@ -51,11 +49,21 @@ HomePage.navigationOptions = ({navigation}) => {
     };
 };
 
+AccountPage.navigationOptions = ({navigation}) => {
+    let tabBarVisible = true;
+
+    if (navigation.state.index > 0) {
+            tabBarVisible = false;
+    }
+
+    return {
+        tabBarVisible,
+    };
+};
+
 const StackNavigator = createStackNavigator(
     {
-        LoadingPage: {screen: LoadingPage},
-        HomePage: {screen: TabNavigator},
-        LoginPage: {screen: LoginPage},
+        HomePage: {screen: TabNavigator}
     },
     {
         initialRouteName: Constants.HOME_PAGE,

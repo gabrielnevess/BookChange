@@ -9,8 +9,11 @@ import {Api} from "../../../helpers";
 import {baseURL} from "../../../helpers/Api";
 import {Grid, Col} from "react-native-easy-grid";
 import SplashScreen from "react-native-splash-screen";
+import {bindActionCreators} from "redux";
+import UserActions from "../../../store/Ducks/User";
+import {connect} from "react-redux";
 
-export default class HomePage extends Component {
+class HomePage extends Component {
 
     didFocusSubscription;
     willBlurSubscription;
@@ -45,6 +48,11 @@ export default class HomePage extends Component {
         });
     }
 
+    async componentWillMount(){
+        const storage = await AsyncStorage.getItem(Constants.TOKEN);
+        this.props.userSetToken(storage); //set token
+    }
+
     componentDidMount() {
         SplashScreen.hide();
         this.willBlurSubscription = this.props.navigation.addListener("willBlur", () => {
@@ -65,21 +73,22 @@ export default class HomePage extends Component {
 
     loadDataList = async () => {
 
-        if (this.state.loading) return;
+        if (this.state.loading) {
+            return;
+        }
+        const {page} = this.state;
+        this.setState({loading: true});
 
         try {
-            const {page} = this.state;
-            const storage = await AsyncStorage.getItem(Constants.TOKEN);
-            this.setState({loading: true});
+
             const {data} = await Api.get(`/anuncios?page=${page}&limit=${10}`, {
                 headers: {
-                    "Authorization": `Bearer ${storage}`,
+                    "Authorization": `Bearer ${this.props.token}`,
                     "Content-Type": "application/json"
                 }
             });
 
             console.log(data.content);
-
             this.setState({
                 dataList: [...this.state.dataList, ...data.content.data],
                 page: page + 1,
@@ -94,15 +103,13 @@ export default class HomePage extends Component {
     };
 
     renderAnuncios = ({item, index}) => {
-
         let image = item.imagens[index] ? {uri: `${baseURL}/anuncio_imagens/${item.imagens[index].te_path}`} : null;
-
         return (
             <Card
                 elevation={3}
                 style={Styles.cardContainer}>
                 <Grid>
-                    <Col>
+                    <Col style={{ justifyContent: "center", alignItems: "center" }}>
                         <Image
                             resizeMode={"contain"}
                             source={image}
@@ -110,10 +117,10 @@ export default class HomePage extends Component {
                             defaultSource={require("../../../assets/images/book-change-black.png")}/>
                     </Col>
                     <Col>
-                        <Col style={{ alignItems: "flex-end" }}>
+                        <Col style={{alignItems: "flex-end"}}>
                             <Avatar.Icon size={24} icon={item.en_tipo_anuncio === "troca" ? "swap-horiz" : "attach-money"}/>
                         </Col>
-                        <Col>
+                        <Col style={{ alignItems: "flex-end" }}>
                             <Text style={{fontSize: 16, fontWeight: "bold"}}>{item.va_titulo_livro}</Text>
                             <Text>{item.va_autor_livro}</Text>
                             <Text>{item.va_ano_livro}</Text>
@@ -127,7 +134,9 @@ export default class HomePage extends Component {
 
     renderFooter = () => {
         const {loading} = this.state;
-        if (!loading) return null;
+        if (!loading) {
+            return null
+        }
         return (
             <View style={{alignSelf: 'center', marginVertical: 22}}>
                 <ActivityIndicator size="large" color={Colors.lightPink}/>
@@ -142,15 +151,27 @@ export default class HomePage extends Component {
                     style={{marginBottom: 60, marginTop: 5}}
                     data={this.state.dataList}
                     renderItem={this.renderAnuncios}
-                    keyExtractor={item => String(item.in_anuncio_id)} // É obrigatório utilizar item, é padrão do flatlist
-                    //onEndReached={this.loadDataList}
-                    //onEndReachedThreshold={0.1} // Chegando em 10% do fim da flatlist chama o onEndReached
+                    keyExtractor={item => item.in_anuncio_id.toString()} // É obrigatório utilizar item, é padrão do flatlist
+                    onEndReached={this.loadDataList}
+                    onEndReachedThreshold={0.9} // Chegando em 10% do fim da flatlist chama o onEndReached
                     numColumns={1}
                     disableVirtualization={true}
-                    //ListFooterComponent={this.renderFooter}
+                    ListFooterComponent={this.renderFooter}
                 />
             </SafeAreaView>
         );
     }
 
 }
+
+const mapStateToProps = ({user}) => ({
+    loading: user.loading,
+    token: user.token,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(UserActions, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HomePage);

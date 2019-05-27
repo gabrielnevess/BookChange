@@ -1,9 +1,9 @@
 import {put, call} from "redux-saga/effects";
 import UserTypes from "../Ducks/User";
 import {Constants} from "../../util";
-import {Axios, Navigation} from "../../helpers";
+import {Api} from "../../helpers";
 import AsyncStorage from "@react-native-community/async-storage";
-import QueryString from "qs";
+import QueryString from "query-string";
 
 export function* userRequestLogin({email, password}) {
     try {
@@ -13,15 +13,13 @@ export function* userRequestLogin({email, password}) {
             va_password: password
         };
 
-        const {data} = yield call(Axios.post, "/autenticar", QueryString.stringify(obj));
+        const {data} = yield call(Api.post, "/autenticar", QueryString.stringify(obj));
         console.log("userRequestLogin: ", data);
         AsyncStorage.multiSet([[Constants.EMAIL, email], [Constants.TOKEN, data.token]]);
 
-        Navigation.navigate(Constants.HOME_PAGE);
-        yield put(UserTypes.userRequestSuccess());
+        yield put(UserTypes.userSetToken(data.token));
 
     } catch (error) {
-
         console.log(error.response);
         yield put(UserTypes.userRequestFailed());
 

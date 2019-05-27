@@ -11,13 +11,5 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-end",
         margin: 2
-    },
-    // textPrice: {
-    //     fontSize: Fonts.regular,
-    //     textDecorationLine: 'line-through'
-    // },
-    // textPricePromotion: {
-    //     fontSize: Fonts.large,
-    //     fontWeight: "bold"
-    // }
+    }
 });

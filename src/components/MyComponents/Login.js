@@ -1,20 +1,11 @@
 import React, {Component} from "react";
-import {ActivityIndicator, BackHandler, SafeAreaView, View, Image} from "react-native";
-import {Button, TextInput, Text} from "react-native-paper";
-import AsyncStorage from "@react-native-community/async-storage";
-import {Colors} from "../../../styles";
-import Styles from "./Styles";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import UserActions from "../../../store/Ducks/User";
-import SplashScreen from "react-native-splash-screen";
+import {ActivityIndicator, Image, SafeAreaView, View, StyleSheet} from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
-import {Constants} from "../../../util";
+import {Button, Text, TextInput} from "react-native-paper";
+import {Constants} from "../../util";
+import {Colors} from "../../styles";
 
-class LoginPage extends Component {
-
-    didFocusSubscription;
-    willBlurSubscription;
+export default class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -24,39 +15,17 @@ class LoginPage extends Component {
             password: ""
         };
 
-        this.didFocusSubscription = props.navigation.addListener("didFocus", () => {
-            BackHandler.addEventListener("hardwareBackPress", this.onBackPressionado);
-        });
-
-    }
-
-    async componentWillMount() {
-    }
-
-    componentDidMount() {
-        SplashScreen.hide();
-        this.willBlurSubscription = this.props.navigation.addListener("willBlur", () => {
-            BackHandler.removeEventListener("hardwareBackPress", this.onBackPressionado)
-        });
-    }
-
-    componentWillUnmount() {
-        this.willBlurSubscription && this.willBlurSubscription.remove();
-        this.didFocusSubscription && this.didFocusSubscription.remove();
     }
 
     renderBtnAcessar = () => {
-
         const {loading} = this.props;
-
         if (loading) {
             return (
                 <View style={{marginTop: 10}}>
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size="large"/>
                 </View>
             );
         }
-
         return (
             <Button
                 mode="contained"
@@ -72,51 +41,34 @@ class LoginPage extends Component {
         this.props.userRequestLogin(email, password);
     };
 
-    onBackPressionado = () => {
-        BackHandler.exitApp();
-        return true;
-    };
-
     render() {
-
-        const {loading} = this.props;
-
         return (
-
             <SafeAreaView style={{flex: 1}}>
-
                 <KeyboardAwareScrollView>
-
                     <View style={Styles.viewImage}>
                         <Image
                             resizeMode="stretch"
                             style={Styles.logo}
-                            source={require("../../../assets/images/book-change-black.png")}/>
+                            source={require("../../assets/images/book-change-black.png")}/>
                     </View>
-
                     <View style={Styles.container}>
-
                         <TextInput
                             label="E-mail"
                             mode="outlined"
-                            disabled={loading}
+                            disabled={this.props.loading}
                             value={this.state.email}
                             onChangeText={(email) => this.setState({email})}
                         />
-
                         <TextInput
                             label="Senha"
                             mode="outlined"
-                            disabled={loading}
+                            disabled={this.props.loading}
                             value={this.state.password}
                             onChangeText={(password) => this.setState({password})}
                             secureTextEntry={true}
                         />
-
                         <View style={{marginTop: 5}}>
-
                             {this.renderBtnAcessar()}
-
                             <View style={{marginTop: 5}}>
                                 <Button
                                     mode="text"
@@ -124,27 +76,42 @@ class LoginPage extends Component {
                                     <Text style={Styles.textRegister}>REGISTRAR-SE</Text>
                                 </Button>
                             </View>
-
                         </View>
-
                     </View>
-
                 </KeyboardAwareScrollView>
-
             </SafeAreaView>
-
         );
     }
-
 }
 
-const mapStateToProps = ({user}) => ({
-    loading: user.loading
+const Styles = StyleSheet.create({
+    logo: {
+        alignSelf: "center",
+        width: 200,
+        height: 135
+    },
+    textRegister: {
+        textAlign: "center",
+        color: Colors.black
+    },
+    textSignIn: {
+        textAlign: "center",
+        color: Colors.white
+    },
+    buttonLogin: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: Colors.blue,
+    },
+    container: {
+        flex: 3,
+        marginTop: 50,
+        marginHorizontal: 5
+    },
+    viewImage: {
+        flex: 1,
+        alignItems: "center",
+        marginTop: 50,
+        marginBottom: 15
+    }
 });
-
-const mapDispatchToProps = dispatch => bindActionCreators(UserActions, dispatch);
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LoginPage);

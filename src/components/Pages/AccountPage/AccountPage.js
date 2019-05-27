@@ -5,8 +5,9 @@ import {Colors} from "../../../styles";
 import {bindActionCreators} from "redux";
 import UserActions from "../../../store/Ducks/User";
 import {connect} from "react-redux";
-import {Navigation} from "../../../helpers";
 import {Constants} from "../../../util";
+import AsyncStorage from "@react-native-community/async-storage";
+import Login from "../../MyComponents/Login";
 
 class AccountPage extends Component {
 
@@ -28,19 +29,15 @@ class AccountPage extends Component {
 
     constructor(props) {
         super(props);
-
         this.didFocusSubscription = props.navigation.addListener("didFocus", () => {
             BackHandler.addEventListener("hardwareBackPress", this.onBackPressionado);
         });
-
     }
 
     componentDidMount() {
-
         this.willBlurSubscription = this.props.navigation.addListener("willBlur", () => {
             BackHandler.removeEventListener("hardwareBackPress", this.onBackPressionado)
         });
-
     }
 
     componentWillUnmount() {
@@ -54,6 +51,12 @@ class AccountPage extends Component {
     };
 
     render() {
+
+        if (this.props.token === null) {
+            return (
+                <Login {...this.props} />
+            )
+        }
         return (
             <SafeAreaView style={{flex: 1, alignItems: "center"}}>
                 <Button
@@ -64,8 +67,13 @@ class AccountPage extends Component {
                             'Já vai?',
                             'Deseja realmente sair?',
                             [
-                                {text: 'Não', onPress: () => console.log('Cancel Pressed'),},
-                                {text: 'Sim', onPress: () => Navigation.resetPagesWithNavigation(Constants.LOGIN_PAGE)},
+                                {text: 'Não', onPress: () => console.log('Cancel Pressed')},
+                                {
+                                    text: 'Sim', onPress: () => {
+                                        AsyncStorage.removeItem(Constants.TOKEN);
+                                        this.props.userSetToken(null);
+                                    }
+                                },
                             ],
                             {cancelable: false},
                         );
@@ -79,7 +87,8 @@ class AccountPage extends Component {
 }
 
 const mapStateToProps = ({user}) => ({
-    loading: user.loading
+    loading: user.loading,
+    token: user.token,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(UserActions, dispatch);

@@ -3,7 +3,7 @@ import {StyleSheet} from "react-native";
 export default StyleSheet.create({
     logo: {
         marginLeft: 5,
-        width: 80,
+        width: 75,
         height: 50
     },
     image: {

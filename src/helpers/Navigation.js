@@ -29,7 +29,12 @@ const resetPagesWithNavigation = (routeName, params) => {
     );
 };
 
+const pop = () => {
+    _navigator.dispatch(NavigationActions.back());
+};
+
 export default {
+    pop,
     navigate,
     setTopLevelNavigator,
     resetPagesWithNavigation
