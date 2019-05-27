@@ -14,7 +14,7 @@ export default class RegisterPage extends Component {
                 <Appbar.Header>
                     <Appbar.BackAction
                         color={Colors.white}
-                        onPress={() => navigation.pop()}/>
+                        onPress={() => navigation.goBack()}/>
                     <Appbar.Content
                         color={Colors.white}
                         title="Registrar-se"/>

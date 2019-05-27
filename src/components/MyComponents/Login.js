@@ -4,6 +4,7 @@ import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {Button, Text, TextInput} from "react-native-paper";
 import {Constants} from "../../util";
 import {Colors} from "../../styles";
+import {Navigation} from "../../helpers";
 
 export default class Login extends Component {
 
@@ -72,7 +73,7 @@ export default class Login extends Component {
                             <View style={{marginTop: 5}}>
                                 <Button
                                     mode="text"
-                                    onPress={() => this.props.navigation.navigate(Constants.REGISTER_PAGE)}>
+                                    onPress={() => Navigation.navigate(Constants.REGISTER_PAGE)}>
                                     <Text style={Styles.textRegister}>REGISTRAR-SE</Text>
                                 </Button>
                             </View>

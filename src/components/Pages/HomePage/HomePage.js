@@ -48,13 +48,12 @@ class HomePage extends Component {
         });
     }
 
-    async componentWillMount(){
+    async componentDidMount() {
+        SplashScreen.hide();
+
         const storage = await AsyncStorage.getItem(Constants.TOKEN);
         this.props.userSetToken(storage); //set token
-    }
 
-    componentDidMount() {
-        SplashScreen.hide();
         this.willBlurSubscription = this.props.navigation.addListener("willBlur", () => {
             BackHandler.removeEventListener("hardwareBackPress", this.onBackPressionado)
         });

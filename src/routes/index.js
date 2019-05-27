@@ -1,7 +1,7 @@
 import React from "react";
 import {Provider as StoreProvider} from "react-redux";
 import {DefaultTheme, Provider as PaperProvider} from "react-native-paper";
-import {createAppContainer, createStackNavigator} from "react-navigation";
+import {createAppContainer} from "react-navigation";
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import {Navigation} from "../helpers";
 import {Colors} from "../styles";
@@ -14,6 +14,8 @@ import tabBarIcon from "../components/MyComponents/TabBarIcon";
 /* paginas */
 import HomePage from "../components/Pages/HomePage";
 import AccountPage from "../components/Pages/AccountPage";
+import {Animated, Easing} from "react-native";
+
 
 const TabNavigator = createMaterialBottomTabNavigator({
     HomePage: {
@@ -53,7 +55,7 @@ AccountPage.navigationOptions = ({navigation}) => {
     let tabBarVisible = true;
 
     if (navigation.state.index > 0) {
-            tabBarVisible = false;
+        tabBarVisible = false;
     }
 
     return {
@@ -61,20 +63,7 @@ AccountPage.navigationOptions = ({navigation}) => {
     };
 };
 
-const StackNavigator = createStackNavigator(
-    {
-        HomePage: {screen: TabNavigator}
-    },
-    {
-        initialRouteName: Constants.HOME_PAGE,
-        headerMode: "none",
-        defaultNavigationOptions: {
-            gesturesEnabled: false
-        }
-    },
-);
-
-const AppContainer = createAppContainer(StackNavigator);
+const AppContainer = createAppContainer(TabNavigator);
 
 const theme = {
     ...DefaultTheme,

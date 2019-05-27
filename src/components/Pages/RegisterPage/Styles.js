@@ -12,12 +12,4 @@ export default StyleSheet.create({
         justifyContent: "flex-end",
         margin: 2
     },
-    // textPrice: {
-    //     fontSize: Fonts.regular,
-    //     textDecorationLine: 'line-through'
-    // },
-    // textPricePromotion: {
-    //     fontSize: Fonts.large,
-    //     fontWeight: "bold"
-    // }
 });

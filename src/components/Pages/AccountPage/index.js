@@ -3,18 +3,13 @@ import {Constants} from "../../../util";
 
 /* paginas */
 import AccountPage from "./AccountPage";
-import RegisterPage from "../RegisterPage";
+import RegisterPage from "../RegisterPage/RegisterPage";
 
 export default createStackNavigator(
     {
-        Account: {screen: AccountPage},
-        RegisterPage: {
-            screen: RegisterPage,
-            navigationOptions: {
-                header: null
-            }
-        },
-        initialRouteName: Constants.ACCOUNT_PAGE,
+        AccountPage: {screen: AccountPage},
+        RegisterPage: {screen: RegisterPage},
+        initialRouteName: Constants.ACCOUNT_PAGE
     },
     {
         defaultNavigationOptions: {

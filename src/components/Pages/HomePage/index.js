@@ -3,17 +3,12 @@ import {Constants} from "../../../util";
 
 /* paginas */
 import HomePage from "./HomePage";
-import SearchPage from "../SearchPage";
+import SearchPage from "../SearchPage/SearchPage";
 
 export default createStackNavigator(
     {
         HomePage: {screen: HomePage},
-        SearchPage: {
-            screen: SearchPage,
-            navigationOptions: {
-                header: null
-            }
-        },
+        SearchPage: {screen: SearchPage},
         initialRouteName: Constants.HOME_PAGE,
     },
     {
