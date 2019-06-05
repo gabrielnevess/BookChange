@@ -8,14 +8,12 @@ import {Colors} from "../styles";
 import {Constants} from "../util";
 import store from "../store";
 
-//icone da tabBar
+/* icone da tabBar */
 import tabBarIcon from "../components/MyComponents/TabBarIcon";
 
 /* paginas */
 import HomePage from "../components/Pages/HomePage";
 import AccountPage from "../components/Pages/AccountPage";
-import {Animated, Easing} from "react-native";
-
 
 const TabNavigator = createMaterialBottomTabNavigator({
     HomePage: {

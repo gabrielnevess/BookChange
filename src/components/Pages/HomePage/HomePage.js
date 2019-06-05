@@ -39,6 +39,7 @@ class HomePage extends Component {
 
         this.state = {
             loading: false,
+            isEndLine: false,
             dataList: [],
             page: 1,
         };
@@ -72,31 +73,39 @@ class HomePage extends Component {
 
     loadDataList = async () => {
 
-        if (this.state.loading) {
-            return;
-        }
-        const {page} = this.state;
-        this.setState({loading: true});
+        if (!this.state.loading && !this.state.isEndLine) {
 
-        try {
+            const {page} = this.state;
+            this.setState({loading: true});
 
-            const {data} = await Api.get(`/anuncios?page=${page}&limit=${10}`, {
-                headers: {
-                    "Authorization": `Bearer ${this.props.token}`,
-                    "Content-Type": "application/json"
+            try {
+
+                const {data} = await Api.get(`/anuncios?page=${page}&limit=${10}`, {
+                    headers: {
+                        "Authorization": `Bearer ${this.props.token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+                console.log(data.content);
+
+                if(data.content.data.length > 0) {
+                    this.setState({
+                        dataList: [...this.state.dataList, ...data.content.data],
+                        page: page + 1,
+                        loading: false,
+                    });
+                } else {
+                    this.setState({
+                        loading: false,
+                        isEndLine: true
+                    });
                 }
-            });
 
-            console.log(data.content);
-            this.setState({
-                dataList: [...this.state.dataList, ...data.content.data],
-                page: page + 1,
-                loading: false,
-            });
+            } catch (e) {
+                console.log(e);
+                this.setState({loading: false});
+            }
 
-        } catch (e) {
-            console.log(e);
-            this.setState({loading: false});
         }
 
     };
@@ -147,10 +156,10 @@ class HomePage extends Component {
         return (
             <SafeAreaView style={{flex: 1}}>
                 <FlatList
-                    style={{marginBottom: 60, marginTop: 5}}
+                    style={{marginBottom: 55, marginTop: 5}}
                     data={this.state.dataList}
                     renderItem={this.renderAnuncios}
-                    keyExtractor={item => item.in_anuncio_id.toString()} // É obrigatório utilizar item, é padrão do flatlist
+                    keyExtractor={item => String(item.in_anuncio_id)} // É obrigatório utilizar item, é padrão do flatlist
                     onEndReached={this.loadDataList}
                     onEndReachedThreshold={0.9} // Chegando em 10% do fim da flatlist chama o onEndReached
                     numColumns={1}
