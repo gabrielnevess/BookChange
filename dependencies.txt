@@ -17,3 +17,4 @@ npm install react-navigation-material-bottom-tabs --save
 npm install react-native-splash-screen --save && react-native link react-native-splash-screen
 npm install react-native-easy-grid --save
 npm install react-native-snap-carousel --save
+npm install moment --save

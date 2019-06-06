@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import {Appbar} from "react-native-paper";
-import {BackHandler, ActivityIndicator, SafeAreaView, View} from "react-native";
+import {Appbar, Avatar, Text, Button} from "react-native-paper";
+import {BackHandler, ActivityIndicator, SafeAreaView, View, Alert} from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {Col, Row, Grid} from "react-native-easy-grid";
 import {Constants, Dimensions} from "../../../util";
@@ -10,6 +10,8 @@ import {baseURL} from "../../../helpers/Api";
 import {Colors} from "../../../styles";
 import {Api} from "../../../helpers";
 import Styles from "./Styles";
+import Moment from "moment";
+import "moment/locale/pt-br";
 
 export default class AnnoucementDetailPage extends Component {
 
@@ -36,7 +38,7 @@ export default class AnnoucementDetailPage extends Component {
 
         this.state = {
             loading: false,
-            annoucementList: []
+            annoucement: null
         };
 
         this.didFocusSubscription = props.navigation.addListener("didFocus", () => {
@@ -79,7 +81,7 @@ export default class AnnoucementDetailPage extends Component {
             }
 
             this.setState({
-                annoucementList: data,
+                annoucement: data,
                 loading: false
             });
 
@@ -95,27 +97,81 @@ export default class AnnoucementDetailPage extends Component {
     };
 
     renderAnnoucementDetail = () => {
+
+        const {annoucement} = this.state;
+
         return (
-            <Carousel
-                initialNumToRender={1}
-                maxToRenderPerBatch={2}
-                data={this.state.annoucementList.imagens}
-                renderItem={this.renderItem}
-                sliderWidth={Dimensions.WIDTH}
-                itemWidth={Dimensions.WIDTH * 0.95 + 10}
-                inactiveSlideScale={0.95}
-                inactiveSlideOpacity={1}
-                enableMomentum={true}
-                activeSlideAlignment={"start"}
-                containerCustomStyle={Styles.slider}
-                contentContainerCustomStyle={Styles.sliderContentContainer}
-                activeAnimationType={"spring"}
-                loop={true}
-                activeAnimationOptions={{friction: 2, tension: 40}}
-                autoplay={true}
-                autoplayDelay={500}
-                autoplayInterval={3000}
-            />
+            <Grid>
+                <Row size={75} style={{justifyContent: "center", alignItems: "center"}}>
+                    <Col>
+                        <Row style={{justifyContent: "center", alignItems: "center"}}>
+                            <Text style={Styles.textTitleAnnoucement}>{annoucement.va_titulo_livro}</Text>
+                        </Row>
+                        <Carousel
+                            initialNumToRender={1}
+                            maxToRenderPerBatch={2}
+                            data={annoucement.imagens}
+                            renderItem={this.renderItem}
+                            sliderWidth={Dimensions.WIDTH}
+                            itemWidth={Dimensions.WIDTH * 0.95}
+                            inactiveSlideScale={0.95}
+                            inactiveSlideOpacity={1}
+                            enableMomentum={true}
+                            activeSlideAlignment={"start"}
+                            containerCustomStyle={Styles.slider}
+                            contentContainerCustomStyle={Styles.sliderContentContainer}
+                            activeAnimationType={"spring"}
+                            loop={true}
+                            activeAnimationOptions={{friction: 2, tension: 40}}
+                            autoplay={true}
+                            autoplayDelay={500}
+                            autoplayInterval={3000}
+                        />
+                        <Col>
+                            <Row style={{alignItems: "center"}}>
+                                <Text style={[Styles.textSummaryBook, {marginRight: 5}]}>
+                                    {annoucement.en_tipo_anuncio === "troca" ? "Troca" : "Venda"}
+                                </Text>
+                                <Avatar.Icon size={24}
+                                             icon={annoucement.en_tipo_anuncio === "troca" ? "swap-horiz" : "attach-money"}/>
+                            </Row>
+                            <Row>
+                                <Text style={Styles.textSummaryBook}>Postado: </Text>
+                                <Text>{Moment(annoucement.dt_data_criacao).format("LLL")}</Text>
+                            </Row>
+                            <Row>
+                                <Text style={Styles.textSummaryBook}>Autor: </Text>
+                                <Text>{annoucement.va_autor_livro}</Text>
+                            </Row>
+                            <Row>
+                                <Text style={Styles.textSummaryBook}>Estado: </Text>
+                                <Text>{annoucement.en_estado === "novo" ? "Novo" : "Usado"}</Text>
+                            </Row>
+                            <Text style={Styles.textSummaryBook}>Resumo do Livro: </Text>
+                            <Text style={Styles.textDescripton}>{annoucement.va_descricao}</Text>
+                        </Col>
+                    </Col>
+                </Row>
+                <Row size={25} style={{alignItems: "center", justifyContent: "center"}}>
+                    <Button
+                        style={{backgroundColor: Colors.lightPink, marginTop: 30, marginBottom: 20}}
+                        mode="contained" onPress={() => {
+                        false
+                        Alert.alert(
+                            "Dados do Anunciante",
+                            `Nome do Anunciante: ${annoucement.usuario.va_nome}\n` +
+                            `Celular: ${annoucement.usuario.va_celular}\n` +
+                            `E-mail: ${annoucement.usuario.va_email}`,
+                            [
+                                {text: "Fechar", onPress: () => false},
+                            ],
+                            {cancelable: false}
+                        )
+                    }}>
+                        <Text style={{color: Colors.white}}>Entrar em Contato com Anunciante</Text>
+                    </Button>
+                </Row>
+            </Grid>
         );
     };
 
@@ -131,7 +187,7 @@ export default class AnnoucementDetailPage extends Component {
             );
         }
 
-        if(this.state.annoucementList.length !== 0) {
+        if (this.state.annoucement !== null) {
             return this.renderAnnoucementDetail();
         }
 
