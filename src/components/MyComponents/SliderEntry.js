@@ -21,7 +21,7 @@ export default class SliderEntry extends Component {
                 resizeMode={"contain"}
                 source={{uri: `${url}/${data.url}`}}
                 style={styles.image}
-                defaultSource={require("../../assets/imgs/imperio.png")}/>
+                defaultSource={require("../../assets/images/book-change-black.png")}/>
         );
     };
 

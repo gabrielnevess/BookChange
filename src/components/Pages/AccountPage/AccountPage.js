@@ -7,7 +7,7 @@ import UserActions from "../../../store/Ducks/User";
 import {connect} from "react-redux";
 import {Constants} from "../../../util";
 import AsyncStorage from "@react-native-community/async-storage";
-import Login from "../../MyComponents/Login";
+import {Login} from "../../MyComponents";
 
 class AccountPage extends Component {
 
