@@ -5,7 +5,7 @@ import {Animated} from "react-native";
 /* paginas */
 import HomePage from "./HomePage";
 import SearchPage from "../SearchPage/SearchPage";
-//import AnnoucementDetailPage from "../AnnouncementDetailPage";
+import AnnoucementDetailPage from "../AnnouncementDetailPage";
 
 export default createStackNavigator(
     {
@@ -16,12 +16,12 @@ export default createStackNavigator(
                 header: null
             }
         },
-        // AnnoucementDetailPage: {
-        //     screen: AnnoucementDetailPage,
-        //     navigationOptions: {
-        //         header: null
-        //     }
-        // },
+        AnnoucementDetailPage: {
+            screen: AnnoucementDetailPage,
+            navigationOptions: {
+                header: null
+            }
+        },
         initialRouteName: Constants.HOME_PAGE,
     },
     {

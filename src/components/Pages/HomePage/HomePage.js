@@ -115,7 +115,11 @@ class HomePage extends Component {
         return (
             <Card
                 elevation={3}
-                style={Styles.cardContainer}>
+                style={Styles.cardContainer}
+                onPress={() => this.props.navigation.navigate(Constants.ANNOUCEMENT_DETAIL_PAGE, {
+                    annoucement: item
+                })}
+            >
                 <Grid>
                     <Col style={{ justifyContent: "center", alignItems: "center" }}>
                         <Image
