@@ -163,7 +163,7 @@ class HomePage extends Component {
                     style={{marginBottom: 55, marginTop: 5}}
                     data={this.state.dataList}
                     renderItem={this.renderAnuncios}
-                    keyExtractor={item => String(item.in_anuncio_id)} // É obrigatório utilizar item, é padrão do flatlist
+                    keyExtractor={item => String(item.in_anuncio_id + new Date())} // É obrigatório utilizar item, é padrão do flatlist
                     onEndReached={this.loadDataList}
                     onEndReachedThreshold={0.9} // Chegando em 10% do fim da flatlist chama o onEndReached
                     numColumns={1}

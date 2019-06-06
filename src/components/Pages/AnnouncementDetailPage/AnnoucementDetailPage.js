@@ -168,7 +168,7 @@ export default class AnnoucementDetailPage extends Component {
                             {cancelable: false}
                         )
                     }}>
-                        <Text style={{color: Colors.white}}>Entrar em Contato com Anunciante</Text>
+                        <Text style={{color: Colors.white}}>Entrar em Contato</Text>
                     </Button>
                 </Row>
             </Grid>
