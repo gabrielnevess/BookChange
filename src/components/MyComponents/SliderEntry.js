@@ -19,7 +19,7 @@ export default class SliderEntry extends Component {
         return (
             <Image
                 resizeMode={"contain"}
-                source={{uri: `${url}/${data.url}`}}
+                source={{uri: `${url}/${data.te_path}`}}
                 style={styles.image}
                 defaultSource={require("../../assets/images/book-change-black.png")}/>
         );

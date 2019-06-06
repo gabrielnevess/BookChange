@@ -3,14 +3,15 @@ import {Appbar} from "react-native-paper";
 import {BackHandler, ActivityIndicator, SafeAreaView, View} from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {Col, Row, Grid} from "react-native-easy-grid";
+import {Constants, Dimensions} from "../../../util";
 import Carousel from "react-native-snap-carousel";
 import {SliderEntry} from "../../MyComponents";
-import {Constants} from "../../../util";
+import {baseURL} from "../../../helpers/Api";
 import {Colors} from "../../../styles";
-import Styles from "./Styles";
 import {Api} from "../../../helpers";
+import Styles from "./Styles";
 
-export default class ProductDetailPage extends Component {
+export default class AnnoucementDetailPage extends Component {
 
     didFocusSubscription;
     willBlurSubscription;
@@ -35,6 +36,7 @@ export default class ProductDetailPage extends Component {
 
         this.state = {
             loading: false,
+            annoucementList: []
         };
 
         this.didFocusSubscription = props.navigation.addListener("didFocus", () => {
@@ -71,8 +73,13 @@ export default class ProductDetailPage extends Component {
             });
             console.log("Annoucement: ", data);
 
+            //se não encontrar nenhuma imagem no array de imagens
+            if (data.imagens.length === 0) {
+                data.imagens = [{url: ""}];
+            }
+
             this.setState({
-                annoucement: data,
+                annoucementList: data,
                 loading: false
             });
 
@@ -83,10 +90,34 @@ export default class ProductDetailPage extends Component {
 
     };
 
-    // renderItem = ({item}) => {
-    //     const {urlName} = this.state;
-    //     return <SliderEntry url={urlName} data={item}/>;
-    // };
+    renderItem = ({item}) => {
+        return <SliderEntry url={`${baseURL}/anuncio_imagens`} data={item}/>;
+    };
+
+    renderAnnoucementDetail = () => {
+        return (
+            <Carousel
+                initialNumToRender={1}
+                maxToRenderPerBatch={2}
+                data={this.state.annoucementList.imagens}
+                renderItem={this.renderItem}
+                sliderWidth={Dimensions.WIDTH}
+                itemWidth={Dimensions.WIDTH * 0.95 + 10}
+                inactiveSlideScale={0.95}
+                inactiveSlideOpacity={1}
+                enableMomentum={true}
+                activeSlideAlignment={"start"}
+                containerCustomStyle={Styles.slider}
+                contentContainerCustomStyle={Styles.sliderContentContainer}
+                activeAnimationType={"spring"}
+                loop={true}
+                activeAnimationOptions={{friction: 2, tension: 40}}
+                autoplay={true}
+                autoplayDelay={500}
+                autoplayInterval={3000}
+            />
+        );
+    };
 
     loading = () => {
 
@@ -95,9 +126,13 @@ export default class ProductDetailPage extends Component {
         if (loading) {
             return (
                 <View style={{alignSelf: "center", marginVertical: 20}}>
-                    <ActivityIndicator size="large" color={Colors.blue}/>
+                    <ActivityIndicator size="large" color={Colors.lightPink}/>
                 </View>
             );
+        }
+
+        if(this.state.annoucementList.length !== 0) {
+            return this.renderAnnoucementDetail();
         }
 
     };
